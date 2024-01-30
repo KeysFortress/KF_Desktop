@@ -105,6 +105,7 @@ flutter:
     - packages/domain/assets/images/cloud-connection-issue.svg
     - packages/domain/assets/images/cloud-not-connected.svg
     - packages/domain/assets/images/bin.svg
+    - packages/domain/assets/images/secrets.svg
 
     #Configs
     - packages/domain/config.json

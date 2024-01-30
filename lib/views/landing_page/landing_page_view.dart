@@ -1,4 +1,5 @@
 import 'package:components/dashboard_header/dashboard_header.dart';
+import 'package:components/desktop_navigation/desktop_navigation.dart';
 import 'package:components/identity_card/identity_card.dart';
 import 'package:components/main_navigation/main_navigation.dart';
 import 'package:components/navigation_menu/navigatioon_menu.dart';
@@ -19,32 +20,47 @@ class LandingPageView extends StatelessWidget {
       onViewModelReady: (viewModel) => viewModel.ready(),
       builder: (context, viewModel, child) => Material(
         color: ThemeStyles.theme.background300,
-        child: Column(
+        child: Row(
           children: [
-            MainNavigation(),
-            DashboardHeader(
-              type: viewModel.activePage,
-              onNewPassword: viewModel.onGenerateNewPassword,
+            DesktopNavigation(
+              onPageChanged: viewModel.onPageChanged,
             ),
             Expanded(
-              flex: 1,
-              child: ListView.builder(
-                itemCount:
-                    viewModel.activePage == ActiveNavigationPage.passwords
-                        ? viewModel.secrets.length
-                        : viewModel.identities.length,
-                itemBuilder: (context, index) =>
-                    viewModel.activePage == ActiveNavigationPage.passwords
-                        ? SecretCard(
-                            secret: viewModel.secrets.elementAt(index),
-                          )
-                        : IdentityCard(
-                            identity: viewModel.identities.elementAt(index),
+              child: Builder(
+                builder: (containerContext) {
+                  var width = 0.2 * MediaQuery.of(containerContext).size.width;
+                  return Container(
+                    margin: EdgeInsets.fromLTRB(width / 2, 0, width / 2, 0),
+                    child: Column(
+                      children: [
+                        DashboardHeader(
+                          type: viewModel.activePage,
+                          onNewPassword: viewModel.onGenerateNewPassword,
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: ListView.builder(
+                            itemCount: viewModel.activePage ==
+                                    ActiveNavigationPage.passwords
+                                ? viewModel.secrets.length
+                                : viewModel.identities.length,
+                            itemBuilder: (context, index) => viewModel
+                                        .activePage ==
+                                    ActiveNavigationPage.passwords
+                                ? SecretCard(
+                                    secret: viewModel.secrets.elementAt(index),
+                                  )
+                                : IdentityCard(
+                                    identity:
+                                        viewModel.identities.elementAt(index),
+                                  ),
                           ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
-            ),
-            NavigationMenu(
-              onPageChanged: viewModel.onPageChanged,
             ),
           ],
         ),
