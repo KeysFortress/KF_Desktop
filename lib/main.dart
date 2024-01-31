@@ -53,14 +53,13 @@ class MyApp extends StatelessWidget {
           },
           debugShowCheckedModeBanner: false,
           routerConfig: internalRouter.router,
-          builder: (context, child) => Row(
+          builder: (bc, child) => Row(
             children: [
-              // Left side - Menu
-              DesktopNavigation(onPageChanged: () {}),
-
-              // Right side - Router/Views
+              DesktopNavigation(
+                context: context,
+              ),
               Expanded(
-                child: child ?? Container(), // Ensure child is not null
+                child: child ?? Container(),
               ),
             ],
           ),

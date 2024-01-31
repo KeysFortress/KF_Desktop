@@ -9,10 +9,11 @@ import 'package:get_it/get_it.dart';
 import 'package:infrastructure/interfaces/iexception_manager.dart';
 import "package:infrastructure/interfaces/ipage_router_service.dart";
 import 'package:stacked/stacked.dart';
+import 'package:shared/locator.dart' as locator;
 
 class MainViewModel extends BaseViewModel {
   late BuildContext _context;
-  GetIt getIt = GetIt.instance;
+  GetIt getIt = locator.getIt;
   late IPageRouterService routerService;
   late IExceptionManager _exceptionManager;
   late bool? _isConfigured;

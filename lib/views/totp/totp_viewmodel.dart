@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:domain/models/enums.dart';
 import 'package:domain/models/otp_code.dart';
-import 'package:domain/models/transition_data.dart';
 import 'package:infrastructure/interfaces/iotp_service.dart';
 import 'package:shared/page_view_model.dart';
+import 'package:components/topt_entry_box/totp_entry_box.dart';
 
 class TotpViewModel extends PageViewModel {
   late IOtpService _otpService;
@@ -31,16 +30,6 @@ class TotpViewModel extends PageViewModel {
     notifyListeners();
   }
 
-  onAddPressed() {
-    router.changePage(
-      "/add-totp",
-      pageContext,
-      TransitionData(
-        next: PageTransition.slideForward,
-      ),
-    );
-  }
-
   String getCode(OtpCode elementAt) {
     return _otpService.getCode(elementAt.secret);
   }
@@ -49,5 +38,19 @@ class TotpViewModel extends PageViewModel {
     await _otpService.remove(elementAt.secret);
     _secrets = await _otpService.get();
     notifyListeners();
+  }
+
+  addTotpCode() {
+    router.openDialog(
+      TotpEntryBox(
+        onSave: onSave,
+      ),
+      pageContext,
+    );
+  }
+
+  onSave() async {
+    router.dismissBar();
+    await ready();
   }
 }
