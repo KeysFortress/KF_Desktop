@@ -7,7 +7,6 @@ import 'package:infrastructure/interfaces/ipage_router_service.dart';
 import 'package:presentation/views/add_otp_code/add_otp_code_view.dart';
 import 'package:presentation/views/identities/identities_view.dart';
 import 'package:presentation/views/identity_history/identity_history_view.dart';
-import 'package:presentation/views/landing_page/landing_page_view.dart';
 import 'package:presentation/views/passwords/passwords_view.dart';
 import 'package:presentation/views/start_auth/start_auth_view.dart';
 import 'package:presentation/views/totp/totp_view.dart';

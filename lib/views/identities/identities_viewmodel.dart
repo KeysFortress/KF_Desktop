@@ -14,6 +14,7 @@ class IdentitiesViewModel extends PageViewModel {
 
   ready() async {
     _identities = await _identityManager.getSecrets();
+    notifyListeners();
   }
 
   onGenerateIdentity() async {
@@ -29,7 +30,8 @@ class IdentitiesViewModel extends PageViewModel {
     );
   }
 
-  onSave() {
+  onSave() async {
     router.dismissBar();
+    await ready();
   }
 }
