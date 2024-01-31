@@ -64,7 +64,7 @@ class LandingPageViewModel extends PageViewModel {
   void generatePassword() {
     var password = _secretManger.generateSecret();
     print(password);
-    router.openBar(
+    router.openDialog(
       PasswordEntryBox(
         password: password,
         onSave: onSave,
@@ -77,7 +77,7 @@ class LandingPageViewModel extends PageViewModel {
     var result = await _identityManager.generateIdentity();
     print(result.publicKey);
     print(result.privateKey);
-    router.openBar(
+    router.openDialog(
       IdentityEntryBox(
         keyData: result,
         onSave: onSave,

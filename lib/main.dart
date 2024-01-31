@@ -1,3 +1,4 @@
+import 'package:components/desktop_navigation/desktop_navigation.dart';
 import 'package:domain/models/core_router.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
@@ -26,36 +27,49 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final internalRouter = CoreRouter(router: appRouter);
 
-    return ViewModelBuilder<MainViewModel>.reactive(
-      builder: (context, model, child) => MaterialApp.router(
-        supportedLocales: [
-          Locale('en', 'US'), // English
-          Locale('de', 'DE'), // German
-        ],
-        locale: Locale("en_DE"),
-        localizationsDelegates: [
-          LocalJsonLocalization.delegate,
-        ],
-        localeResolutionCallback: (locale, supportedLocales) {
-          if (supportedLocales.contains(locale)) {
-            return locale;
-          }
+    return Material(
+      child: ViewModelBuilder<MainViewModel>.reactive(
+        builder: (context, model, child) => MaterialApp.router(
+          supportedLocales: [
+            Locale('en', 'US'), // English
+            Locale('de', 'DE'), // German
+          ],
+          locale: Locale("en_DE"),
+          localizationsDelegates: [
+            LocalJsonLocalization.delegate,
+          ],
+          localeResolutionCallback: (locale, supportedLocales) {
+            if (supportedLocales.contains(locale)) {
+              return locale;
+            }
 
-          // define pt_BR as default when de language code is 'pt'
-          if (locale?.languageCode == 'pt') {
+            // define pt_BR as default when de language code is 'pt'
+            if (locale?.languageCode == 'pt') {
+              return Locale('en', 'DE');
+            }
+
+            // default language
             return Locale('en', 'DE');
-          }
+          },
+          debugShowCheckedModeBanner: false,
+          routerConfig: internalRouter.router,
+          builder: (context, child) => Row(
+            children: [
+              // Left side - Menu
+              DesktopNavigation(onPageChanged: () {}),
 
-          // default language
-          return Locale('en', 'DE');
-        },
-        debugShowCheckedModeBanner: false,
-        routerConfig: internalRouter.router,
-      ),
-      viewModelBuilder: () => MainViewModel(),
-      onViewModelReady: (model) => model.initialized(
-        internalRouter,
-        context,
+              // Right side - Router/Views
+              Expanded(
+                child: child ?? Container(), // Ensure child is not null
+              ),
+            ],
+          ),
+        ),
+        viewModelBuilder: () => MainViewModel(),
+        onViewModelReady: (model) => model.initialized(
+          internalRouter,
+          context,
+        ),
       ),
     );
   }

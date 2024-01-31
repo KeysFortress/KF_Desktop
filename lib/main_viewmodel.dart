@@ -9,17 +9,14 @@ import 'package:get_it/get_it.dart';
 import 'package:infrastructure/interfaces/iexception_manager.dart';
 import "package:infrastructure/interfaces/ipage_router_service.dart";
 import 'package:stacked/stacked.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MainViewModel extends BaseViewModel {
   late BuildContext _context;
   GetIt getIt = GetIt.instance;
   late IPageRouterService routerService;
-  late MaterialApp _app;
   late IExceptionManager _exceptionManager;
   late bool? _isConfigured;
   bool? get isConfigured => _isConfigured;
-  MaterialApp get app => _app;
   late CoreRouter? _router;
   CoreRouter? get router => _router;
   StreamSubscription<Uri>? _linkSubscription;
@@ -67,4 +64,6 @@ class MainViewModel extends BaseViewModel {
 
     super.dispose();
   }
+
+  onPageChanged() {}
 }
