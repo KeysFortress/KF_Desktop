@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:infrastructure/interfaces/iexception_manager.dart';
+import 'package:infrastructure/interfaces/ihttp_server.dart';
 import "package:infrastructure/interfaces/ipage_router_service.dart";
 import 'package:stacked/stacked.dart';
 import 'package:shared/locator.dart' as locator;
@@ -20,6 +21,7 @@ class MainViewModel extends BaseViewModel {
   bool? get isConfigured => _isConfigured;
   late CoreRouter? _router;
   CoreRouter? get router => _router;
+  late IHttpServer _httpServer;
   StreamSubscription<Uri>? _linkSubscription;
 
   initialized(CoreRouter router, BuildContext context) async {
@@ -27,10 +29,12 @@ class MainViewModel extends BaseViewModel {
     _router = router;
     _exceptionManager = getIt.get<IExceptionManager>();
     routerService = getIt.get<IPageRouterService>();
+    _httpServer = getIt.get<IHttpServer>();
     routerService.registerRouter(router);
     var deviceDimensions = MediaQuery.of(context).size;
     ThemeStyles.width = deviceDimensions.width;
     ThemeStyles.height = deviceDimensions.height;
+    await _httpServer.startServer();
 
     registerGlobalExceptionHandler();
     notifyListeners();
