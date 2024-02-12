@@ -46,6 +46,7 @@ analysis_benchmark.json
 
 # Flutter/Dart/Pub related
 **/doc/api/
+*/.dart_tool/
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -127,11 +128,19 @@ app.*.symbols
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-!/dev/ci/**/Gemfile.lock
+!/dev/ci/**/Ge
 
-# Airzen_App_Components
-# domain
-# Airzen_App_Application
-# Airzen_App_Infrastructure
-# Airzen_Shared_Views
-# Airzen_App_Localization
+# Ignore submodule changes
+KF_Domain/*
+KF_Application/*
+KF_Components/*
+KF_Infrastructure/*
+KF_Localization/*
+KF_Shared/*
+
+KF_Domain
+KF_Application
+KF_Components
+KF_Infrastructure
+KF_Localization
+KF_Shared
