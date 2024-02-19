@@ -109,6 +109,8 @@ flutter:
 
     #Configs
     - packages/domain/config.json
+    - lib/certificates/cert.pem
+    - lib/certificates/key.pem
 
     #Animations
 
