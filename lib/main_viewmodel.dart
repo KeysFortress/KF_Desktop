@@ -6,6 +6,7 @@ import 'package:domain/styles.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:infrastructure/interfaces/iconfiguration.dart';
 import 'package:infrastructure/interfaces/iexception_manager.dart';
 import 'package:infrastructure/interfaces/ihttp_server.dart';
 import "package:infrastructure/interfaces/ipage_router_service.dart";
@@ -22,9 +23,12 @@ class MainViewModel extends BaseViewModel {
   late CoreRouter? _router;
   CoreRouter? get router => _router;
   late IHttpServer _httpServer;
+  late IConfiguration _configuration;
   StreamSubscription<Uri>? _linkSubscription;
 
   initialized(CoreRouter router, BuildContext context) async {
+    _configuration = getIt.get<IConfiguration>();
+    await _configuration.load();
     _context = context;
     _router = router;
     _exceptionManager = getIt.get<IExceptionManager>();
