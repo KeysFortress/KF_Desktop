@@ -31,10 +31,12 @@ class MainViewModel extends BaseViewModel {
     await _configuration.load();
     _context = context;
     _router = router;
+
     _exceptionManager = getIt.get<IExceptionManager>();
     routerService = getIt.get<IPageRouterService>();
     _httpServer = getIt.get<IHttpServer>();
     routerService.registerRouter(router);
+    routerService.isLocked = false;
     var deviceDimensions = MediaQuery.of(context).size;
     ThemeStyles.width = deviceDimensions.width;
     ThemeStyles.height = deviceDimensions.height;
